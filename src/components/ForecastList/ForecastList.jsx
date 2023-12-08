@@ -23,56 +23,57 @@ const ForecastList = ({ city }) => {
   useEffect(() => {
     if (city) {
       const getForecastList = async () => {
-        const response = await axios.get(`${BASE_URL}/forecast`, {
-          params: {
-            q: city,
-            appid: API_KEY,
-            units: 'imperial'
-          }
-        })
-
-        const aggregatedByDay = response.data.list.reduce((acc, forecast) => {
-          const dateObj = new Date(forecast.dt * 1000)
-          const date = dateObj.getDate() // Get numeric date
-          const day = dateObj.toLocaleDateString('en-US', {
-            weekday: 'long'
-          })
-          const month = dateObj.toLocaleDateString('en-US', {
-            month: '2-digit'
-          })
-
-          const dateString = `${day}\n${month}/${date}`
-
-          if (!acc[dateString]) {
-            acc[dateString] = {
-              min: forecast.main.temp_min,
-              max: forecast.main.temp_max,
-              conditions: new Set([forecast.weather[0].main])
+        try {
+          const response = await axios.get(`${BASE_URL}/forecast`, {
+            params: {
+              q: city,
+              appid: API_KEY,
+              units: 'imperial'
             }
-          } else {
-            acc[dateString].min = Math.min(
-              acc[dateString].min,
-              forecast.main.temp_min
-            )
-            acc[dateString].max = Math.max(
-              acc[dateString].max,
-              forecast.main.temp_max
-            )
-            acc[dateString].conditions.add(forecast.weather[0].main)
-          }
-          return acc
-        }, {})
+          })
 
-        Object.keys(aggregatedByDay).forEach((date) => {
-          const conditionsArray = Array.from(aggregatedByDay[date].conditions)
-          aggregatedByDay[date].predominantCondition = conditionsArray.includes(
-            'Clear'
-          )
-            ? 'Clear'
-            : conditionsArray[0]
-        })
+          const aggregatedByDay = response.data.list.reduce((acc, forecast) => {
+            const dateObj = new Date(forecast.dt * 1000)
+            const date = dateObj.getDate() // Get numeric date
+            const day = dateObj.toLocaleDateString('en-US', {
+              weekday: 'long'
+            })
+            const month = dateObj.toLocaleDateString('en-US', {
+              month: '2-digit'
+            })
 
-        setDailyForecasts(aggregatedByDay)
+            const dateString = `${day}\n${month}/${date}`
+
+            if (!acc[dateString]) {
+              acc[dateString] = {
+                min: forecast.main.temp_min,
+                max: forecast.main.temp_max,
+                conditions: new Set([forecast.weather[0].main])
+              }
+            } else {
+              acc[dateString].min = Math.min(
+                acc[dateString].min,
+                forecast.main.temp_min
+              )
+              acc[dateString].max = Math.max(
+                acc[dateString].max,
+                forecast.main.temp_max
+              )
+              acc[dateString].conditions.add(forecast.weather[0].main)
+            }
+            return acc
+          }, {})
+
+          Object.keys(aggregatedByDay).forEach((date) => {
+            const conditionsArray = Array.from(aggregatedByDay[date].conditions)
+            aggregatedByDay[date].predominantCondition =
+              conditionsArray.includes('Clear') ? 'Clear' : conditionsArray[0]
+          })
+
+          setDailyForecasts(aggregatedByDay)
+        } catch (error) {
+          console.error(error)
+        }
       }
       getForecastList()
     }
