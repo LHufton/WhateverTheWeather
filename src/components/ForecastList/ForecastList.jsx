@@ -83,7 +83,7 @@ const ForecastList = ({ city }) => {
 
               return (
                 <td key={dateString}>
-                  <h3>{dateString}</h3>
+                  <p>{dateString}</p>
                   <img src={icon} alt={dayData.predominantCondition} />
                   <p>High of {dayData.max.toFixed(2)}°F</p>
                   <p>Low of {dayData.min.toFixed(2)}°F</p>
