@@ -37,6 +37,7 @@ const WeatherDetails = ({ city }) => {
           })
           setWeatherData(response.data)
           const currentCondition = response.data.weather[0].main
+          console.log('Current Weather Condition:', currentCondition) // Log the current weather condition
           updateWeatherImage(
             currentCondition,
             response.data.weather[0].description
@@ -89,7 +90,7 @@ const WeatherDetails = ({ city }) => {
       {error && <p>{error}</p>}
       {weatherData && (
         <div className="current-weather">
-          <h2> Currently in {weatherData.name}</h2>
+          {/* <h3> {weatherData.name}</h3> */}
           <img src={weatherImage} alt="Weather condition" />
           <img
             src={dayNightImage}

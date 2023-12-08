@@ -87,7 +87,7 @@ const ForecastList = ({ city }) => {
               <img src={icon} alt={dayData.predominantCondition} />
               <p>High of {dayData.max.toFixed(2)}°F</p>
               <p>Low of {dayData.min.toFixed(2)}°F</p>
-              <p> {dayData.predominantCondition}</p>
+              <p> {dayData.predominantCondition}Conditions</p>
             </div>
           )
         })}
