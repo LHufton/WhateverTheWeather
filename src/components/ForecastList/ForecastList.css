@@ -1,16 +1,31 @@
-* {
-  box-sizing: border-box;
-}
+/* ForecastList.css */
 
 .forecast {
-  display: inline;
+  margin-top: 20px;
+  text-align: center;
 }
 
-.forecast-day {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100px;
-  text-align: left;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+img {
+  max-width: 100px;
+  height: auto;
+}
+
+p {
+  margin: 5px 0;
+  font-size: 14px;
+}

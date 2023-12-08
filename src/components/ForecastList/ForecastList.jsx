@@ -6,7 +6,6 @@ import rainyImage from '../../assets/rainy-7.svg'
 import snowyImage from '../../assets/snowy-1.svg'
 import thunderImage from '../../assets/thunder.svg'
 import cloudyImage from '../../assets/cloudy.svg'
-import weatherImage from '../../assets/weather.svg'
 import dayImage from '../../assets/day.svg'
 
 const weatherIcons = {
@@ -15,7 +14,7 @@ const weatherIcons = {
   Thunderstorm: thunderImage,
   Clouds: cloudyImage,
   Clear: dayImage,
-  default: weatherImage
+  default: dayImage
 }
 
 const ForecastList = ({ city }) => {
@@ -75,23 +74,26 @@ const ForecastList = ({ city }) => {
 
   return (
     <div className="forecast">
-      {/* <h2>Five Day Forecast</h2> */}
-      <div className="auto-grid-small">
-        {Object.keys(dailyForecasts).map((dateString) => {
-          const dayData = dailyForecasts[dateString]
-          const icon = weatherIcons[dayData.predominantCondition]
+      <table>
+        <tbody>
+          <tr>
+            {Object.keys(dailyForecasts).map((dateString) => {
+              const dayData = dailyForecasts[dateString]
+              const icon = weatherIcons[dayData.predominantCondition]
 
-          return (
-            <div key={dateString} className="forecast-day">
-              <h3>{dateString}</h3>
-              <img src={icon} alt={dayData.predominantCondition} />
-              <p>High of {dayData.max.toFixed(2)}°F</p>
-              <p>Low of {dayData.min.toFixed(2)}°F</p>
-              <p> {dayData.predominantCondition}Conditions</p>
-            </div>
-          )
-        })}
-      </div>
+              return (
+                <td key={dateString}>
+                  <h3>{dateString}</h3>
+                  <img src={icon} alt={dayData.predominantCondition} />
+                  <p>High of {dayData.max.toFixed(2)}°F</p>
+                  <p>Low of {dayData.min.toFixed(2)}°F</p>
+                  {/* <p>Conditions: {dayData.predominantCondition} </p> */}
+                </td>
+              )
+            })}
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }
