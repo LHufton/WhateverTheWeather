@@ -33,9 +33,15 @@ const ForecastList = ({ city }) => {
 
         const aggregatedByDay = response.data.list.reduce((acc, forecast) => {
           const dateObj = new Date(forecast.dt * 1000)
-          const date = dateObj.toLocaleDateString()
-          const day = dateObj.toLocaleDateString('en-US', { weekday: 'long' })
-          const dateString = `${day}, ${date}`
+          const date = dateObj.getDate() // Get numeric date
+          const day = dateObj.toLocaleDateString('en-US', {
+            weekday: 'long'
+          })
+          const month = dateObj.toLocaleDateString('en-US', {
+            month: '2-digit'
+          })
+
+          const dateString = `${day}\n${month}/${date}`
 
           if (!acc[dateString]) {
             acc[dateString] = {
@@ -80,14 +86,15 @@ const ForecastList = ({ city }) => {
             {Object.keys(dailyForecasts).map((dateString) => {
               const dayData = dailyForecasts[dateString]
               const icon = weatherIcons[dayData.predominantCondition]
+              const [day, date] = dateString.split('\n')
 
               return (
                 <td key={dateString}>
-                  <p>{dateString}</p>
+                  <p className="day">{day}</p>
+                  <p className="date">{date}</p>
                   <img src={icon} alt={dayData.predominantCondition} />
                   <p>High of {dayData.max.toFixed(2)}°F</p>
                   <p>Low of {dayData.min.toFixed(2)}°F</p>
-                  {/* <p>Conditions: {dayData.predominantCondition} </p> */}
                 </td>
               )
             })}

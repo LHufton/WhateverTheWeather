@@ -1,31 +1,28 @@
-/* ForecastList.css */
-
 .forecast {
-  margin-top: 20px;
-  text-align: center;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+  td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
 
-td {
-  border: 1px solid #ccc;
-  padding: 10px;
-}
+  .day {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
 
-h3 {
-  margin: 0;
-  font-size: 16px;
-}
+  .date {
+    font-size: 16px;
+    margin-top: 0;
+  }
 
-img {
-  max-width: 100px;
-  height: auto;
-}
-
-p {
-  margin: 5px 0;
-  font-size: 14px;
+  img {
+    width: 50px;
+    height: 50px;
+  }
 }

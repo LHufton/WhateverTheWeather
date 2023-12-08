@@ -37,7 +37,6 @@ const WeatherDetails = ({ city }) => {
           })
           setWeatherData(response.data)
           const currentCondition = response.data.weather[0].main
-          console.log('Current Weather Condition:', currentCondition) // Log the current weather condition
           updateWeatherImage(
             currentCondition,
             response.data.weather[0].description
@@ -48,7 +47,6 @@ const WeatherDetails = ({ city }) => {
           setError(
             'Failed to fetch weather data. Check your network or API key.'
           )
-          console.error(error) // Log the error for debugging
         }
       }
       fetchWeatherData()
@@ -60,8 +58,6 @@ const WeatherDetails = ({ city }) => {
   }
 
   const updateWeatherImage = (condition, description) => {
-    console.log('Condition:', condition)
-    console.log('Description:', description)
     if (
       description.toLowerCase().includes('rain') ||
       description.toLowerCase().includes('drizzle')
@@ -100,7 +96,10 @@ const WeatherDetails = ({ city }) => {
             Temperature: {kelvinToFahrenheit(weatherData.main.temp).toFixed(2)}
             °F
           </p>
-          <p>Description: {weatherData.weather[0].description}</p>
+          <p>
+            {weatherData.weather[0].description.charAt(0).toUpperCase() +
+              weatherData.weather[0].description.slice(1)}
+          </p>
         </div>
       )}
     </div>
