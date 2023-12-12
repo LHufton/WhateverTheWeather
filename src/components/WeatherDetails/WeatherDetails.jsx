@@ -87,18 +87,18 @@ const WeatherDetails = ({ city }) => {
       {weatherData && (
         <div className="current-weather">
           <p>Currently</p>
-          <img src={weatherImage} alt="Weather condition" />
           <img
             src={dayNightImage}
             alt={dayNightImage === dayIcon ? 'Day' : 'Night'}
           />
+          <img src={weatherImage} alt="Weather condition" />
           <p>
             Temperature: {kelvinToFahrenheit(weatherData.main.temp).toFixed(2)}
             °F
           </p>
           <p>
-            {weatherData.weather[0].description.charAt(0).toUpperCase() +
-              weatherData.weather[0].description.slice(1)}
+            {/* {weatherData.weather[0].description.charAt(0).toUpperCase() +
+              weatherData.weather[0].description.slice(1)} */}
           </p>
         </div>
       )}
