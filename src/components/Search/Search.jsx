@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 import React from 'react'
 import './Search.css'
 
 const Search = () => {
+=======
+import React, { useState } from 'react'
+import './Search.css'
+
+const Search = ({ handleCitySearch }) => {
+  const [inputValue, setInputValue] = useState('')
+
+>>>>>>> draft
   return (
     <div className="App">
       <h2>Whatever the Weather</h2>
