@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { API_KEY } from '../../utils' // Assuming API_KEY is moved to a constants file
+import { API_KEY } from '../../utils' 
+import weatherData from './useWeatherData' /
 import { fetchWeatherData, kelvinToFahrenheit } from '../../utils' // Import utility functions
-import { getWeatherIcon, getDayNightIcon } from '../../weatherIcons' // Import icon utility
+import { getWeatherIcon, getDayNightIcon } from '../../weatherIcons' 
 import './WeatherDetails.css'
 
 const WeatherDetails = ({ city }) => {
