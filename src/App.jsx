@@ -6,7 +6,6 @@ import WeatherDetails from './components/WeatherDetails/WeatherDetails'
 
 const App = () => {
   const [city, setCity] = useState('')
-  const [inputValue, setInputValue] = useState('')
 
   const handleCitySearch = (e) => {
     e.preventDefault()
@@ -15,8 +14,8 @@ const App = () => {
 
   return (
     <div>
-      <Search />
-      <WeatherDetails />
+      <Search handleCitySearch={handleCitySearch} />
+      <WeatherDetails city={city} />
       <ForecastList />
     </div>
   )

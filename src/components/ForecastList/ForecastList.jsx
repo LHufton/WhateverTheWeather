@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { BASE_URL, API_KEY } from '../../globals'
+import { BASE_URL, API_KEY } from '../../utils'
 import './ForecastList.css'
 import rainyImage from '../../assets/rainy-7.svg'
 import snowyImage from '../../assets/snowy-1.svg'
