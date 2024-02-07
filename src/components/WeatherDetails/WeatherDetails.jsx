@@ -1,50 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import { API_KEY } from '../../utils' 
-import weatherData from './useWeatherData' /
-import { fetchWeatherData, kelvinToFahrenheit } from '../../utils' // Import utility functions
-import { getWeatherIcon, getDayNightIcon } from '../../weatherIcons' 
+import React from 'react'
+import useWeatherData from './useWeatherData'
+import { API_KEY, kelvinToFahrenheit } from '../../utils'
+// import weatherImages from '../../weatherIcons'
 import './WeatherDetails.css'
+import { getWeatherIcon, getDayNightIcon } from '../../weatherIcons'
 
 const WeatherDetails = ({ city }) => {
-  const [weatherData, setWeatherData] = useState(null)
-  const [error, setError] = useState('')
-  const [weatherImage, setWeatherImage] = useState('')
-  const [dayNightImage, setDayNightImage] = useState('')
+  const { weatherData, error } = useWeatherData(city, API_KEY)
 
-  useEffect(() => {
-    if (city) {
-      fetchWeatherData(city, API_KEY)
-        .then((data) => {
-          setWeatherData(data)
-          setWeatherImage(
-            getWeatherIcon(data.weather[0].main, data.weather[0].description)
-          )
-          setDayNightImage(getDayNightIcon(data.sys.sunrise, data.sys.sunset))
-          setError('')
-        })
-        .catch((error) => {
-          setError(
-            'Failed to fetch weather data. Check your network or API key.'
-          )
-          console.error(error) // Log the error for debugging
-        })
-    }
-  }, [city])
+  if (error) return <p>{error}</p>
+  if (!weatherData) return null
+
+  const weatherIcon = getWeatherIcon(
+    weatherData.weather[0].main,
+    weatherData.weather[0].description
+  )
+  const dayNightIcon = getDayNightIcon(
+    weatherData.sys.sunrise,
+    weatherData.sys.sunset
+  )
 
   return (
-    <div>
-      {error && <p>{error}</p>}
-      {weatherData && (
-        <div className="current-weather">
-          <img src={weatherImage} alt="Weather condition" />
-          <img src={dayNightImage} alt={dayNightImage ? 'Day' : 'Night'} />
-          <p>
-            Temperature: {kelvinToFahrenheit(weatherData.main.temp).toFixed(2)}
-            °F
-          </p>
-          <p>Description: {weatherData.weather[0].description}</p>
-        </div>
-      )}
+    <div className="weather-details">
+      <div className="current-weather">
+        <img src={weatherIcon} alt="Weather condition" />
+        <img src={dayNightIcon} alt="Day or Night" />
+        <p>
+          Temperature: {kelvinToFahrenheit(weatherData.main.temp).toFixed(2)} °F
+        </p>
+        <p>Description: {weatherData.weather[0].description}</p>
+      </div>
     </div>
   )
 }

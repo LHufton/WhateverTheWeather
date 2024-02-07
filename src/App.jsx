@@ -7,9 +7,8 @@ import WeatherDetails from './components/WeatherDetails/WeatherDetails'
 const App = () => {
   const [city, setCity] = useState('')
 
-  const handleCitySearch = (e) => {
-    e.preventDefault()
-    setCity(inputValue)
+  const handleCitySearch = (cityName) => {
+    setCity(cityName)
   }
 
   return (

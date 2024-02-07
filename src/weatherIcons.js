@@ -6,7 +6,7 @@ import thunderImage from './assets/thunder.svg'
 import cloudyImage from './assets/cloudy.svg'
 import defaultImage from './assets/weather.svg'
 
-const weatherImages = {
+export const weatherImages = {
   Rain: rainyImage,
   Snow: snowyImage,
   Thunderstorm: thunderImage,
