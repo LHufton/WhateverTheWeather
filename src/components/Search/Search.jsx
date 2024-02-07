@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import './Search.css'
 
-const Search = ({ handleCitySearch }) => {
+const Search = ({ handleCitySearch, isFetching }) => {
   const [inputValue, setInputValue] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
     handleCitySearch(inputValue)
-    setInputValue('')
   }
 
   return (
@@ -20,6 +19,7 @@ const Search = ({ handleCitySearch }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Enter City"
+          disabled={isFetching}
         />
       </form>
     </div>
