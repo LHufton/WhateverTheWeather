@@ -17,7 +17,7 @@ const App = () => {
     <div>
       <Search handleCitySearch={handleCitySearch} isFetching={isFetching} />
       <WeatherDetails city={city} setIsFetching={setIsFetching} />
-      <ForecastList />
+      <ForecastList city={city} />
     </div>
   )
 }
