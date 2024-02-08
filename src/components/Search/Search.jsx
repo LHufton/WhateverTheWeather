@@ -7,6 +7,7 @@ const Search = ({ handleCitySearch, isFetching }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     handleCitySearch(inputValue)
+    setInputValue('') // Optionally clear the input after search
   }
 
   return (
@@ -19,11 +20,10 @@ const Search = ({ handleCitySearch, isFetching }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Enter City"
-          disabled={isFetching}
+          disabled={isFetching} // Consider the necessity and correctness of this
         />
       </form>
     </div>
   )
 }
-
 export default Search

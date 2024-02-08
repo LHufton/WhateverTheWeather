@@ -1,22 +1,26 @@
 import axios from 'axios'
+
 export const BASE_URL = 'https://api.openweathermap.org/data/2.5'
 export const API_KEY = import.meta.env.VITE_API_KEY
 
 export const fetchWeatherData = async (city, apiKey) => {
-  console.log(`Fetching weather data for city: ${city} with API key: ${apiKey}`) // Log the API call
+  const source = axios.CancelToken.source()
   try {
     const response = await axios.get(`${BASE_URL}/weather`, {
       params: {
         q: city,
         appid: apiKey
-      }
+      },
+      cancelToken: source.token
     })
-    console.log('API Response:', response.data) // Log the API response data
     return response.data
   } catch (error) {
-    console.error('API Call Error:', error) // Log any errors
-    throw error // Rethrow the error so it can be handled by the caller
+    if (!axios.isCancel(error)) {
+      console.error('API Call Error:', error)
+    }
+    throw error
   }
+  return source
 }
 
 export const kelvinToFahrenheit = (kelvin) => {

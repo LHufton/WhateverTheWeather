@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useWeatherData from './useWeatherData'
 import { API_KEY, kelvinToFahrenheit } from '../../utils'
-// import weatherImages from '../../weatherIcons'
 import './WeatherDetails.css'
-import { getWeatherIcon, getDayNightIcon } from '../../weatherIcons'
+import { getWeatherIcon, getDayNightIcon } from '../../WeatherIcons'
 
-const WeatherDetails = ({ city }) => {
+const WeatherDetails = ({ city, onDataFetched }) => {
   const { weatherData, error } = useWeatherData(city, API_KEY)
+  const [dataFetched, setDataFetched] = useState(false)
+
+  useEffect(() => {
+    if (weatherData && !dataFetched) {
+      onDataFetched()
+      setDataFetched(true) // Ensure this effect only triggers the callback once after data is loaded
+    }
+  }, [weatherData, onDataFetched, dataFetched])
 
   if (error) return <p>{error}</p>
   if (!weatherData) return null
