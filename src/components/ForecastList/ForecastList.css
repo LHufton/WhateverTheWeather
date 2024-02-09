@@ -6,7 +6,7 @@
   display: inline;
 }
 
-.forecast-day {
+.forecast-list {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,3 +14,7 @@
   text-align: left;
 }
 
+.temp {
+  font-size: 4.5em;
+  font-weight: bold;
+}

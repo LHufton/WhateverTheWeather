@@ -11,8 +11,8 @@ export const weatherImages = {
   Snow: snowyImage,
   Thunderstorm: thunderImage,
   Clouds: cloudyImage,
-  Clear: defaultImage,
-  default: defaultImage
+  Clear: defaultImage
+  // default: defaultImage
 }
 
 export const getWeatherIcon = (condition, description) => {

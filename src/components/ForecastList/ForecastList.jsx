@@ -49,13 +49,17 @@ const ForecastList = ({ city }) => {
 
   return (
     <div className="forecast">
-      <div className="forecast-list">
+      <div className="auto-grid-small">
         {dailyForecasts.map(({ date, icon, maxTemp, minTemp }) => (
           <div key={date} className="forecast-day">
             <h3>{date}</h3>
             <img src={icon} alt="Weather icon" />
-            <p>High: {maxTemp.toFixed(2)}°F</p>
-            <p>Low: {minTemp.toFixed(2)}°F</p>
+            <div className="temp">
+              <h4>
+                <p>High: {maxTemp.toFixed(2)}°F</p>
+                <p>Low: {minTemp.toFixed(2)}°F</p>
+              </h4>
+            </div>
           </div>
         ))}
       </div>

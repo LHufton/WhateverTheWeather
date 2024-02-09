@@ -33,10 +33,8 @@ const WeatherDetails = ({ city, onDataFetched }) => {
         <h2>{city}</h2>
         <img src={weatherIcon} alt="Weather condition" />
         <img src={dayNightIcon} alt="Day or Night" />
-        <p>
-          Temperature: {kelvinToFahrenheit(weatherData.main.temp).toFixed(2)} °F
-        </p>
-        <p>Description: {weatherData.weather[0].description}</p>
+        <p>{kelvinToFahrenheit(weatherData.main.temp).toFixed(2)} °F</p>
+        <p> {weatherData.weather[0].description}</p>
       </div>
     </div>
   )
