@@ -4,7 +4,7 @@ import rainyImage from './assets/rainy-7.svg'
 import snowyImage from './assets/snowy-1.svg'
 import thunderImage from './assets/thunder.svg'
 import cloudyImage from './assets/cloudy.svg'
-import defaultImage from './assets/weather.svg'
+import defaultImage from './assets/day.svg'
 
 export const weatherImages = {
   Rain: rainyImage,
