@@ -11,7 +11,7 @@ const WeatherDetails = ({ city, onDataFetched }) => {
   useEffect(() => {
     if (weatherData && !dataFetched) {
       onDataFetched()
-      setDataFetched(true) // Ensure this effect only triggers the callback once after data is loaded
+      setDataFetched(true)
     }
   }, [weatherData, onDataFetched, dataFetched])
 
@@ -30,6 +30,7 @@ const WeatherDetails = ({ city, onDataFetched }) => {
   return (
     <div className="weather-details">
       <div className="current-weather">
+        <h2>{city}</h2>
         <img src={weatherIcon} alt="Weather condition" />
         <img src={dayNightIcon} alt="Day or Night" />
         <p>

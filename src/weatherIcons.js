@@ -36,3 +36,22 @@ export const getDayNightIcon = (sunrise, sunset) => {
   const currentTime = new Date().getTime() / 1000
   return currentTime >= sunrise && currentTime < sunset ? dayIcon : nightIcon
 }
+
+export const getPredominantCondition = (dailyForecast) => {
+  const conditionCounts = dailyForecast.reduce((acc, forecast) => {
+    const mainCondition = forecast.weather[0].main
+    acc[mainCondition] = (acc[mainCondition] || 0) + 1
+    return acc
+  }, {})
+
+  let predominantCondition = ''
+  let maxCount = 0
+  Object.entries(conditionCounts).forEach(([condition, count]) => {
+    if (count > maxCount) {
+      predominantCondition = condition
+      maxCount = count
+    }
+  })
+
+  return predominantCondition
+}

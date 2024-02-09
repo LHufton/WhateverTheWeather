@@ -20,7 +20,21 @@ export const fetchWeatherData = async (city, apiKey) => {
     }
     throw error
   }
-  return source
+}
+
+export const fetchWeatherForecast = async (city, apiKey) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/forecast`, {
+      params: {
+        q: city,
+        appid: apiKey
+      }
+    })
+    return response.data
+  } catch (error) {
+    // Handle errors
+    throw error
+  }
 }
 
 export const kelvinToFahrenheit = (kelvin) => {

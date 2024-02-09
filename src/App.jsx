@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react' // Import useCallback
 import Search from './components/Search/Search'
 import WeatherDetails from './components/WeatherDetails/WeatherDetails'
 import ForecastList from './components/ForecastList/ForecastList'
+import './index.css'
 
 const App = () => {
   const [city, setCity] = useState('')
