@@ -1,79 +1,47 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { BASE_URL, API_KEY } from '../../globals'
+import { BASE_URL, API_KEY } from '../../utils'
 import './ForecastList.css'
-import rainyImage from '../../assets/rainy-7.svg'
-import snowyImage from '../../assets/snowy-1.svg'
-import thunderImage from '../../assets/thunder.svg'
-import cloudyImage from '../../assets/cloudy.svg'
-import dayImage from '../../assets/day.svg'
-
-const weatherIcons = {
-  Rain: rainyImage,
-  Snow: snowyImage,
-  Thunderstorm: thunderImage,
-  Clouds: cloudyImage,
-  Clear: dayImage,
-  default: dayImage
-}
+import { getWeatherIcon, getPredominantCondition } from '../../WeatherIcons'
 
 const ForecastList = ({ city }) => {
-  const [dailyForecasts, setDailyForecasts] = useState({})
+  const [dailyForecasts, setDailyForecasts] = useState([])
 
   useEffect(() => {
     if (city) {
       const getForecastList = async () => {
-        try {
-          const response = await axios.get(`${BASE_URL}/forecast`, {
-            params: {
-              q: city,
-              appid: API_KEY,
-              units: 'imperial'
+        const response = await axios.get(`${BASE_URL}/forecast`, {
+          params: {
+            q: city,
+            appid: API_KEY,
+            units: 'imperial'
+          }
+        })
+
+        const forecasts = response.data.list.reduce((acc, forecast) => {
+          const date = new Date(forecast.dt * 1000).toDateString()
+          if (!acc[date]) {
+            acc[date] = []
+          }
+          acc[date].push(forecast)
+          return acc
+        }, {})
+
+        const dailyData = Object.entries(forecasts)
+          .map(([date, dailyForecast]) => {
+            const predominantCondition = getPredominantCondition(dailyForecast)
+            const icon = getWeatherIcon(predominantCondition, '')
+
+            return {
+              date,
+              icon,
+              maxTemp: Math.max(...dailyForecast.map((f) => f.main.temp_max)),
+              minTemp: Math.min(...dailyForecast.map((f) => f.main.temp_min))
             }
           })
+          .slice(0, 5)
 
-          const aggregatedByDay = response.data.list.reduce((acc, forecast) => {
-            const dateObj = new Date(forecast.dt * 1000)
-            const date = dateObj.getDate() // Get numeric date
-            const day = dateObj.toLocaleDateString('en-US', {
-              weekday: 'long'
-            })
-            const month = dateObj.toLocaleDateString('en-US', {
-              month: '2-digit'
-            })
-
-            const dateString = `${day}\n${month}/${date}`
-
-            if (!acc[dateString]) {
-              acc[dateString] = {
-                min: forecast.main.temp_min,
-                max: forecast.main.temp_max,
-                conditions: new Set([forecast.weather[0].main])
-              }
-            } else {
-              acc[dateString].min = Math.min(
-                acc[dateString].min,
-                forecast.main.temp_min
-              )
-              acc[dateString].max = Math.max(
-                acc[dateString].max,
-                forecast.main.temp_max
-              )
-              acc[dateString].conditions.add(forecast.weather[0].main)
-            }
-            return acc
-          }, {})
-
-          Object.keys(aggregatedByDay).forEach((date) => {
-            const conditionsArray = Array.from(aggregatedByDay[date].conditions)
-            aggregatedByDay[date].predominantCondition =
-              conditionsArray.includes('Clear') ? 'Clear' : conditionsArray[0]
-          })
-
-          setDailyForecasts(aggregatedByDay)
-        } catch (error) {
-          console.error(error)
-        }
+        setDailyForecasts(dailyData)
       }
       getForecastList()
     }
@@ -81,27 +49,20 @@ const ForecastList = ({ city }) => {
 
   return (
     <div className="forecast">
-      <table>
-        <tbody>
-          <tr>
-            {Object.keys(dailyForecasts).map((dateString) => {
-              const dayData = dailyForecasts[dateString]
-              const icon = weatherIcons[dayData.predominantCondition]
-              const [day, date] = dateString.split('\n')
-
-              return (
-                <td key={dateString}>
-                  <p className="day">{day}</p>
-                  <p className="date">{date}</p>
-                  <img src={icon} alt={dayData.predominantCondition} />
-                  <p>High of {dayData.max.toFixed(2)}°F</p>
-                  <p>Low of {dayData.min.toFixed(2)}°F</p>
-                </td>
-              )
-            })}
-          </tr>
-        </tbody>
-      </table>
+      <div className="auto-grid-small">
+        {dailyForecasts.map(({ date, icon, maxTemp, minTemp }) => (
+          <div key={date} className="forecast-day">
+            <h3>{date}</h3>
+            <img src={icon} alt="Weather icon" />
+            <div className="temp">
+              <h4>
+                <p>High: {maxTemp.toFixed(2)}°F</p>
+                <p>Low: {minTemp.toFixed(2)}°F</p>
+              </h4>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

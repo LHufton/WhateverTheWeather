@@ -1,23 +1,27 @@
-import './App.css'
-import { useState } from 'react'
+import React, { useState, useCallback } from 'react' // Import useCallback
 import Search from './components/Search/Search'
-import ForecastList from './components/ForecastList/ForecastList'
 import WeatherDetails from './components/WeatherDetails/WeatherDetails'
+import ForecastList from './components/ForecastList/ForecastList'
+import './index.css'
 
 const App = () => {
   const [city, setCity] = useState('')
-  const [inputValue, setInputValue] = useState('')
+  const [isFetching, setIsFetching] = useState(false)
 
-  const handleCitySearch = (e) => {
-    e.preventDefault()
-    setCity(inputValue)
-  }
+  const handleCitySearch = useCallback((cityName) => {
+    setCity(cityName)
+    setIsFetching(true)
+  }, [])
+
+  const onDataFetched = useCallback(() => {
+    setIsFetching(false) // Ensure fetching state is reset after each operation
+  }, [])
 
   return (
     <div>
-      <Search />
-      <WeatherDetails />
-      <ForecastList />
+      <Search handleCitySearch={handleCitySearch} isFetching={isFetching} />
+      <WeatherDetails city={city} onDataFetched={onDataFetched} />
+      <ForecastList city={city} />
     </div>
   )
 }

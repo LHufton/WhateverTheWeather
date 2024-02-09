@@ -4,10 +4,18 @@ import './Search.css'
 const Search = ({ handleCitySearch }) => {
   const [inputValue, setInputValue] = useState('')
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (inputValue.trim()) {
+      handleCitySearch(inputValue)
+      setInputValue('') // Clear the input after search
+    }
+  }
+
   return (
     <div className="App">
       <h2>Whatever the Weather</h2>
-      <form onSubmit={handleCitySearch} className="search-bar">
+      <form onSubmit={handleSubmit} className="search-bar">
         <input
           className="search-bar-input"
           type="text"
