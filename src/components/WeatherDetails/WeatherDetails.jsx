@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useWeatherData from './useWeatherData'
-import { API_KEY, kelvinToFahrenheit } from '../../utils'
 import { getWeatherIcon } from '../../WeatherIcons'
+import { API_KEY, kelvinToFahrenheit } from '../../utils'
 import './WeatherDetails.css'
 
 const WeatherDetails = ({ city, onDataFetched }) => {
