@@ -1,28 +1,20 @@
-.forecast {
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-  }
+/* .forecast {
+  display: flex;
+} */
 
-  .day {
-    font-size: 18px;
-    margin-bottom: 0;
-  }
+.forecast-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100px;
+  text-align: left;
+}
 
-  .date {
-    font-size: 16px;
-    margin-top: 0;
-  }
-
-  img {
-    width: 50px;
-    height: 50px;
-  }
+.temp {
+  font-size: 4.5em;
+  font-weight: bold;
 }

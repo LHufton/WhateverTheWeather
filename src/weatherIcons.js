@@ -1,5 +1,5 @@
-import dayIcon from './assets/day.svg'
-import nightIcon from './assets/night.svg'
+// import dayIcon from './assets/day.svg'
+// import nightIcon from './assets/night.svg'
 import rainyImage from './assets/rainy-7.svg'
 import snowyImage from './assets/snowy-1.svg'
 import thunderImage from './assets/thunder.svg'
@@ -14,28 +14,20 @@ export const weatherImages = {
   Clear: defaultImage
   // default: defaultImage
 }
-
 export const getWeatherIcon = (condition, description) => {
-  if (
-    description.toLowerCase().includes('rain') ||
-    description.toLowerCase().includes('drizzle')
-  ) {
-    return rainyImage
-  } else if (description.toLowerCase().includes('snow')) {
-    return snowyImage
-  } else if (description.toLowerCase().includes('thunder')) {
-    return thunderImage
-  } else if (description.toLowerCase().includes('cloud')) {
-    return cloudyImage
-  } else {
-    return weatherImages[condition] || defaultImage
-  }
+  const lowerCaseDescription = description.toLowerCase()
+  const matchedCondition = Object.keys(weatherImages).find((key) =>
+    lowerCaseDescription.includes(key)
+  )
+  return matchedCondition
+    ? conditionImageMap[matchedCondition]
+    : weatherImages[condition] || defaultImage
 }
 
-export const getDayNightIcon = (sunrise, sunset) => {
-  const currentTime = new Date().getTime() / 1000
-  return currentTime >= sunrise && currentTime < sunset ? dayIcon : nightIcon
-}
+// export const getDayNightIcon = (sunrise, sunset) => {
+//   const currentTime = new Date().getTime() / 1000
+//   return currentTime >= sunrise && currentTime < sunset ? dayIcon : nightIcon
+// }
 
 export const getPredominantCondition = (dailyForecast) => {
   const conditionCounts = dailyForecast.reduce((acc, forecast) => {
