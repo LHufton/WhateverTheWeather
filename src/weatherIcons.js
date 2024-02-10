@@ -17,11 +17,11 @@ export const weatherImages = {
 export const getWeatherIcon = (condition, description) => {
   const lowerCaseDescription = description.toLowerCase()
   const matchedCondition = Object.keys(weatherImages).find((key) =>
-    lowerCaseDescription.includes(key)
+    lowerCaseDescription.includes(key.toLowerCase())
   )
-  return matchedCondition
-    ? conditionImageMap[matchedCondition]
-    : weatherImages[condition] || defaultImage
+  return (
+    weatherImages[matchedCondition] || weatherImages[condition] || defaultImage
+  )
 }
 
 // export const getDayNightIcon = (sunrise, sunset) => {

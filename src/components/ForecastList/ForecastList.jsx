@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { BASE_URL, API_KEY } from '../../utils'
-import './ForecastList.css'
 import { getWeatherIcon, getPredominantCondition } from '../../WeatherIcons'
+import './ForecastList.css'
 
 const ForecastList = ({ city }) => {
   const [dailyForecasts, setDailyForecasts] = useState([])
@@ -32,11 +32,23 @@ const ForecastList = ({ city }) => {
             const predominantCondition = getPredominantCondition(dailyForecast)
             const icon = getWeatherIcon(predominantCondition, '')
 
+            // Calculate average feels_like and humidity for the day
+            const avgFeelsLike =
+              dailyForecast.reduce(
+                (acc, curr) => acc + curr.main.feels_like,
+                0
+              ) / dailyForecast.length
+            const avgHumidity =
+              dailyForecast.reduce((acc, curr) => acc + curr.main.humidity, 0) /
+              dailyForecast.length
+
             return {
               date,
               icon,
               maxTemp: Math.max(...dailyForecast.map((f) => f.main.temp_max)),
-              minTemp: Math.min(...dailyForecast.map((f) => f.main.temp_min))
+              minTemp: Math.min(...dailyForecast.map((f) => f.main.temp_min)),
+              feelsLike: avgFeelsLike,
+              humidity: avgHumidity
             }
           })
           .slice(0, 5)
@@ -50,16 +62,20 @@ const ForecastList = ({ city }) => {
   return (
     <div className="forecast">
       <div className="auto-grid-small">
-        {dailyForecasts.map(({ date, icon, maxTemp, minTemp }) => (
-          <div key={date} className="forecast-day">
-            <h3>{date}</h3>
-            <img src={icon} alt="Weather icon" />
-            <div className="temp">
-              <p>High: {maxTemp.toFixed(2)}°F</p>
-              <p>Low: {minTemp.toFixed(2)}°F</p>
+        {dailyForecasts.map(
+          ({ date, icon, maxTemp, minTemp, feelsLike, humidity }) => (
+            <div key={date} className="forecast-day">
+              <h3>{date}</h3>
+              <img src={icon} alt="Weather icon" />
+              <div className="temp">
+                <p>High: {maxTemp.toFixed(2)}°F</p>
+                <p>Low: {minTemp.toFixed(2)}°F</p>
+                <p>Feels Like: {feelsLike.toFixed(2)}°F</p>
+                <p>Humidity: {humidity.toFixed(2)}%</p>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   )
