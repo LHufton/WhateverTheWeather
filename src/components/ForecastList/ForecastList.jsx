@@ -55,10 +55,8 @@ const ForecastList = ({ city }) => {
             <h3>{date}</h3>
             <img src={icon} alt="Weather icon" />
             <div className="temp">
-              <h4>
-                <p>High: {maxTemp.toFixed(2)}°F</p>
-                <p>Low: {minTemp.toFixed(2)}°F</p>
-              </h4>
+              <p>High: {maxTemp.toFixed(2)}°F</p>
+              <p>Low: {minTemp.toFixed(2)}°F</p>
             </div>
           </div>
         ))}

@@ -2,9 +2,9 @@
   box-sizing: border-box;
 }
 
-.forecast {
-  display: inline;
-}
+/* .forecast {
+  display: flex;
+} */
 
 .forecast-list {
   display: flex;
